@@ -1,4 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from "react";
+import AuthForm from "../components/AuthForm";
+import { logout } from "../api";
 
 import Spinner from "../components/Spinner";
 import ErrorMessage from "../components/ErrorMessage";
@@ -11,6 +13,9 @@ import {
 
 const TaskStatistics = lazy(() => import("../components/TaskStatistics"));
 function Projects() {
+const [isAuthenticated, setIsAuthenticated] = useState(
+  Boolean(localStorage.getItem("token"))
+);
   // Task list
   const [tasks, setTasks] = useState([]);
 
@@ -39,23 +44,32 @@ function Projects() {
   // --------------------------------------------------
 
   useEffect(() => {
-    const loadTasks = async () => {
-      try {
-        setLoading(true);
-        setError(null);
+  if (!isAuthenticated) {
+    setTasks([]);
+    setLoading(false);
+    return;
+  }
 
-        const data = await getTasks();
+  const loadTasks = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await getTasks();
+      setTasks(data);
+    } catch (err) {
+      setError(err.message);
 
-        setTasks(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+      if (err.message.toLowerCase().includes("log in")) {
+        logout();
+        setIsAuthenticated(false);
       }
-    };
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    loadTasks();
-  }, []);
+  loadTasks();
+}, [isAuthenticated]);
 
   // --------------------------------------------------
   // SHOW TOAST MESSAGE
@@ -232,7 +246,16 @@ function Projects() {
   // --------------------------------------------------
   // INITIAL LOADING
   // --------------------------------------------------
-
+if (!isAuthenticated) {
+  return (
+    <AuthForm
+      onLogin={() => {
+        setIsAuthenticated(true);
+        setLoading(true);
+      }}
+    />
+  );
+}
   if (loading) {
     return <Spinner />;
   }
@@ -247,7 +270,17 @@ function Projects() {
       {/* PAGE TITLE */}
 
       <h1>Task Manager</h1>
-
+<button
+  type="button"
+  onClick={() => {
+    logout();
+    setIsAuthenticated(false);
+    setTasks([]);
+    setError(null);
+  }}
+>
+  Logout
+</button>
       {/* ------------------------------------------------
           TOAST NOTIFICATION
       ------------------------------------------------ */}
