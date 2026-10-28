@@ -1,30 +1,64 @@
-# React Task Management App
+# Priya Pathak - Developer Portfolio
 
-## Practical 8: Performance Optimization and Lazy Loading
+A responsive, accessible single-page developer portfolio built for the **Advanced Web Development Frameworks (AWDF)** coursework.
 
-This practical focuses on improving the performance of the React Task Management application using route-based lazy loading and code splitting.
+- **Developer:** Priya Pathak (Student ID: `d25it119`)
+- **Institution:** Charotar University of Science and Technology (CHARUSAT)
+- **Degree:** B.Tech in Information Technology
+- **Coursework:** Advanced Web Development Frameworks (AWDF)
+- **Repository:** [github.com/priyapathak2206/priya-portfolio](https://github.com/priyapathak2206/priya-portfolio)
+
+---
+
+## Portfolio Sections
+
+1. **Header & Navigation:** Sticky top navigation with brand badge, smooth section anchors, and accessible mobile drawer menu.
+2. **Hero:** Introduction, degree summary, verified university affiliation, action buttons for projects and contact, and developer illustration card.
+3. **About:** Academic background in B.Tech Information Technology at CHARUSAT, learning journey, and web development principles.
+4. **Skills:** Categorized technical skill badges (Frontend, Backend & APIs, Databases & Tools).
+5. **Projects:** Verified coursework project cards with implementation highlights and direct GitHub links.
+6. **Contact:** Verified contact cards featuring institutional email (`d25it119@charusat.edu.in`), instant clipboard copy, GitHub profile link, and academic enrollment details.
+7. **Footer:** Simple copyright notice, quick jump links, and repository reference.
+
+---
 
 ## Technologies Used
 
-- React
-- React Router
-- Vite
-- JavaScript
-- CSS
+- **Framework:** React 19
+- **Build Tool:** Vite
+- **Styling:** Semantic CSS3, CSS custom properties (design tokens), responsive Flexbox & CSS Grid
+- **Font Stack:** Inter & System sans-serif
+- **Linting & Quality:** ESLint
 
-## Lazy Loading Implementation
+---
 
-React.lazy() and Suspense are used to load pages and components only when they are required.
+## Local Development & Testing
 
-### Lazy-loaded Routes
+From the repository root:
 
-The following routes are loaded lazily:
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-- Projects
-- Contact
+To build for production:
 
-Example:
+```bash
+cd frontend
+npm run build
+```
 
-```jsx
-const Projects = lazy(() => import("./pages/projects"));
-const Contact = lazy(() => import("./pages/Contact"));
+To preview the production build locally:
+
+```bash
+cd frontend
+npm run preview
+```
+
+To run lint checks:
+
+```bash
+cd frontend
+npm run lint
+```
